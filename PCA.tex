@@ -1,0 +1,171 @@
+\documentclass{beamer}
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{bm} % For bold math symbols
+
+\usetheme{Madrid}
+
+\title{Principal Component Analysis}
+\author{Naman Pesricha}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Slide 1: Notations
+\begin{frame}{Notations}
+    [Placeholder]
+\end{frame}
+
+\begin{frame}{Intuition - PCA}
+    [Placeholder]
+\end{frame}
+
+\begin{frame}{Mathematical Foundations: \textbf{\underline{Symmetric}} Positive Definite Matrices and KKT Conditions}
+
+\begin{block}{Properties of Symmetric Matrices}
+    Let $\bm{A} \in \mathbb{R}^{n \times n}$ be a symmetric matrix ($\bm{A} = \bm{A}^{\top}$).
+    
+    \begin{itemize}
+        \item $\bm{A} = \bm{A}^{\top}$ (by definition of symmetry)
+        \item All eigenvalues of $\bm{A}$ are real
+        \item Eigenvectors of symmetric matrices can be chosen to form an orthogonal set
+    \end{itemize}
+\end{block}
+
+\vspace{0.3cm}
+
+\textbf{Proof: Eigenvalues of $\bm{A}$ are real}  
+
+Let $\lambda \in \mathbb{C}$ and $\bm{v} \in \mathbb{C}^n$ be an eigenpair:
+\[
+\bm{A}\bm{v} = \lambda \bm{v}, \quad \bm{v} \neq \bm{0}
+\]
+Consider $\bm{v}^* \bm{A} \bm{v}$:
+\[
+\bm{v}^* \bm{A} \bm{v} = \bm{v}^* (\lambda \bm{v}) = \lambda \bm{v}^* \bm{v}
+\]
+
+\end{frame}
+
+\begin{frame}{Mathematical Foundations: \textbf{\underline{Symmetric}} Positive Definite Matrices and KKT Conditions}
+
+Taking conjugate transpose of $\bm{A}\bm{v} = \lambda \bm{v}$:
+\[
+(\bm{A}\bm{v})^* = (\lambda \bm{v})^* \quad \Rightarrow \quad \bm{v}^* \bm{A} = \bar{\lambda} \bm{v}^*
+\]
+Thus:
+\[
+\bm{v}^* \bm{A} \bm{v} = \bar{\lambda} \bm{v}^* \bm{v}
+\]
+Equating both expressions:
+\[
+\lambda \bm{v}^* \bm{v} = \bar{\lambda} \bm{v}^* \bm{v}
+\]
+Since $\bm{v}^* \bm{v} > 0$, we get $\boxed{\lambda = \bar{\lambda} \quad \Rightarrow \quad \lambda \in \mathbb{R}}$
+
+\end{frame}
+
+\begin{frame}{Mathematical Foundations: \textbf{\underline{Symmetric}} Positive Definite Matrices and KKT Conditions}
+
+\textbf{Proof: Eigenvectors of symmetric matrices can be chosen to form an orthogonal set}
+
+Let $\bm{A} \in \mathbb{R}^{n \times n}$ be symmetric and let $\lambda_1 \neq \lambda_2$ with corresponding eigenvectors $\bm{v}_1$ and $\bm{v}_2$.
+
+We have:
+\[
+\bm{A}\bm{v}_1 = \lambda_1 \bm{v}_1, \quad \bm{A}\bm{v}_2 = \lambda_2 \bm{v}_2
+\]
+Consider:
+\[
+\bm{v}_2^{\top} \bm{A} \bm{v}_1 = \bm{v}_2^{\top} (\lambda_1 \bm{v}_1) = \lambda_1 \bm{v}_2^{\top} \bm{v}_1
+\]
+Using symmetry ($\bm{A} = \bm{A}^{\top}$):
+\[
+\bm{v}_2^{\top} \bm{A} \bm{v}_1 = (\bm{A} \bm{v}_2)^{\top} \bm{v}_1 = (\lambda_2 \bm{v}_2)^{\top} \bm{v}_1 = \lambda_2 \bm{v}_2^{\top} \bm{v}_1
+\]
+
+\end{frame}
+
+\begin{frame}{Mathematical Foundations: \textbf{\underline{Symmetric}} Positive Definite Matrices and KKT Conditions}
+
+Thus:
+\[
+\lambda_1 \bm{v}_2^{\top} \bm{v}_1 = \lambda_2 \bm{v}_2^{\top} \bm{v}_1
+\]
+Since $\lambda_1 \neq \lambda_2$, we conclude:
+\[
+\boxed{\bm{v}_2^{\top} \bm{v}_1 = 0 \quad \Rightarrow \quad \bm{v}_1 \perp \bm{v}_2}
+\]
+
+If some eigenvalues are repeated, we can still choose orthogonal eigenvectors within the corresponding eigenspace. These are also orthogonal to eigenvectors of distinct eigenvalues. The proof for this is beyond the scope of this course. Interested students can contact the TAs.
+\vspace{0.3cm}
+Thus, the proof is complete.
+
+\end{frame}
+
+\begin{frame}{Mathematical Foundation: \textbf{\underline{Symmetric Positive Definite}} Matrices and KKT Conditions}
+
+\begin{block}{Definition: Symmetric Positive Definite (SPD) Matrix}
+
+A symmetric matrix $\bm{A} \in \mathbb{R}^{n \times n}$ is \textbf{positive definite} if:
+\[
+\bm{A} = \bm{A}^\top \quad \text{and} \quad \bm{v}^\top \bm{A} \bm{v} > 0 \quad \forall \, \bm{v} \in \mathbb{R}^n, \, \bm{v} \neq \bm{0}
+\]
+
+If $\bm{v}^\top \bm{A} \bm{v} \geq 0$ for all $\bm{v} \neq \bm{0}$, then $\bm{A}$ is \textbf{positive semi-definite (PSD)}.
+
+\vspace{0.3cm}
+
+\textbf{Key properties:}
+\begin{itemize}
+    \item $\bm{A} = \bm{A}^\top$ (symmetric)
+    \item $\bm{v}^\top \bm{A} \bm{v} > 0$ for all $\bm{v} \neq \bm{0}$
+    \item All eigenvalues are real $\lambda_i > 0$ $\forall i$
+    \item Eigenvectors of SPD matrices can be chosen to form an orthogonal set
+\end{itemize}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Mathematical Foundation: \textbf{\underline{Symmetric Positive Definite}} Matrices and KKT Conditions}
+
+\textbf{Proof: For a symmetric positive definite matrix, all eigenvalues are positive}
+
+Let $\lambda$ be an eigenvalue with eigenvector $\bm{v} \neq \bm{0}$:
+\[
+\bm{A} \bm{v} = \lambda \bm{v}
+\]
+Consider:
+\[
+\bm{v}^\top \bm{A} \bm{v} = \bm{v}^\top (\lambda \bm{v}) = \lambda \bm{v}^\top \bm{v}
+\]
+Since $\bm{v}^\top \bm{v} > 0$ and $\bm{v}^\top \bm{A} \bm{v} > 0$, it follows:
+\[
+\lambda \bm{v}^\top \bm{v} > 0 \quad \Rightarrow \quad \lambda > 0
+\]
+Thus:
+\[
+\boxed{\lambda_i > 0 \quad \forall \, i = 1,2,\dots, n}
+\]
+
+\end{frame}
+
+
+\begin{frame}{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}
+
+\begin{block} {General Optimization Problem}
+
+Minimize $f(\bm{x})$\\
+Subject to:
+
+    
+\end{block}
+
+\end{frame}
+
+
+\end{document}
