@@ -250,6 +250,43 @@ Note: Every PD matrix is PSD, but not conversely.
 \end{frame}
 
 % BEGIN KKT
+
+\begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
+
+    Karush-Kuhn-Tucker (KKT) conditions provide a mathematical framework for identifying optimal solutions to constrained optimization problems.
+    
+    \begin{itemize}
+        \item Capture both objective and constraint behavior through gradient conditions.
+        \item Identify which constraints are active at the optimal point.
+        \item Help verify optimality in general problems and certify it in convex problems.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
+
+    \textbf{1. Verification (General / Non-Convex Case)}
+    \begin{itemize}
+        \item KKT conditions are \textbf{necessary but not sufficient}.
+        \item A point satisfying KKT is a \textbf{candidate} for optimality.
+        \item Must verify using second-order conditions or objective comparison.
+        \item \textit{Think of KKT as a filter — not a final verdict.}
+    \end{itemize}
+    
+    \medskip
+    
+    \textbf{2. Certification (Convex Case)}
+    \begin{itemize}
+        \item KKT conditions are \textbf{necessary and sufficient}.
+        \item If a point satisfies KKT, it is \textbf{guaranteed to be globally optimal}.
+        \item Requires convex objective and constraint functions (and mild regularity, e.g., Slater's condition).
+        \item \textit{Think of KKT as both filter and proof.}
+    \end{itemize}
+
+\end{frame}
+
+
 \begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
     \begin{block}{Problem Setup: General Constrained Optimization Problem}
         \[
@@ -269,9 +306,16 @@ Note: Every PD matrix is PSD, but not conversely.
 
     \textbf{Constraint Classification}
     \begin{itemize}
-        \item \textbf{ACTIVE}: Constraints that can be violated with an infinitesimal step in the wrong direction.
-        \item \textbf{INACTIVE}: Constraints which won't get violated for any infinitesimally small step.
+    \item \textbf{ACTIVE}: Constraints satisfied exactly at $\mathbf{x^*}$ ($g_i(\mathbf{x^*}) = 0$)
+    \begin{itemize}
+        \item Can be violated by an infinitesimal step in a non-feasible direction
     \end{itemize}
+    
+    \item \textbf{INACTIVE}: Constraints satisfied with slack at $\mathbf{x^*}$ ($g_i(\mathbf{x^*}) < 0$)
+    \begin{itemize}
+        \item Remain satisfied for all infinitesimal steps around $x^*$
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
@@ -420,7 +464,7 @@ We will show how to get the first principal component $\mathbf{v_1}$ from Maximu
         \]
         \begin{itemize}
             \item $\mathbf{X}^\top \mathbf{X}$ = $d \times d$ covariance matrix
-            \item $\mathbf{v}$ = unit direction vector (principal component)
+            \item $\mathbf{v}$ = unit direction vector (principal direction)
         \end{itemize}
     \end{block}
 \end{frame}
