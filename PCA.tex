@@ -42,6 +42,12 @@
     \end{itemize}
         
     \end{block}
+
+    \begin{itemize}
+    \item \textbf{Principal Directions}: Orthogonal vectors that define the directions of maximum variance in the original feature space (New orthonormal basis vectors).
+    \item \textbf{Principal Components}: Coordinates of the data projected onto the principal directions; they represent the data in the new rotated basis.
+    \end{itemize}
+
     
     \footnotesize{Source: \scriptsize{https://en.wikipedia.org/wiki/Principal\_component\_analysis}}
 \end{frame}
@@ -594,7 +600,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
                 \item $\mathbf{V}$ is orthogonal ($\mathbf{V}^{-1} = \mathbf{V}^\top$)
                 \item All eigenvalues real and non-negative
             \end{itemize}
-            \item $\mathbf{V} = [\mathbf{v}_1 \cdots \mathbf{v}_d]$ contains orthonormal eigenvectors
+            \item $\mathbf{V} = [\mathbf{v}_1 \cdots \mathbf{v}_d]$ contains orthonormal eigenvectors (columns are principal directions)
             \item $\mathbf{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$ with $\lambda_1 \geq \cdots \geq \lambda_d \geq 0$
         \end{itemize}
     \end{block}
@@ -608,7 +614,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
         \]
         \begin{itemize}
             \item \textbf{Universal existence}: For any real/complex matrix
-            \item $\mathbf{U} \in \mathbb{R}^{n \times n}$, $\mathbf{V} \in \mathbb{R}^{d \times d}$ orthogonal
+            \item $\mathbf{U} \in \mathbb{R}^{n \times n}$, $\mathbf{V} \in \mathbb{R}^{d \times d}$ orthogonal (columns are principal directions)
             \item $\mathbf{\Sigma} = \begin{pmatrix}
                 \text{diag}(\sigma_1, \ldots, \sigma_r) & \mathbf{0} \\
                 \mathbf{0} & \mathbf{0}
