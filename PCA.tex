@@ -673,8 +673,56 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
 
 % EXAMPLES
 
+\begin{frame}{Exploratory Data Visualization}
+    \begin{center}
+        \scriptsize{4D iris dataset data project to PC1 and PC2}
+        \includegraphics[width=0.65\linewidth]{images/pca/4D_to_2D.png} \\
+    \end{center}
+
+    \begin{itemize}
+        \item We can visualize higher order data in 2 dimensions for EDA by projecting it onto PC1 and PC2.
+        \item From data in PC1 and PC2 (92.5\% + 5.3\%) variance, we infer:
+        \begin{enumerate}
+            \item \checkmark \ Classification of \textbf{setosa} vs others is easy — clear separation. 
+            \item \checkmark \ Classification between \textbf{versicolor} and \textbf{virginica} is harder due to overlap.
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Individual Principal Component Analysis}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{images/pca/components.png} \\
+    \end{center}
+
+    We can see from the above plot, that only PC1 contains most of the information that is needed for classification. One can reduce the storage from $\mathcal{O}(n^4)$ to $\mathcal{O}(n)$, and still can (with significant confidence) classify the data into the three classes. 
+\end{frame}
+
+
+
+\begin{frame}{Dimensionality Reduction}
+     \begin{center}
+        \includegraphics[width=0.8\linewidth]{images/pca/cumulative_variance.png} \\
+    \end{center}
+
+    \small{
+        From the plot above, we observe the number of components required to capture various levels of variance:
+    
+        \begin{itemize}
+            \item \textbf{80\% variance}: 26 components (26\% of original storage)
+            \item \textbf{90\% variance}: 37 components (37\% of original storage)
+            \item \textbf{95\% variance}: 46 components (46\% of original storage)
+        \end{itemize}
+        
+        This highlights the efficiency of PCA in reducing dimensionality. Even at 95\% variance retention, we can reduce the dataset to less than half its original size while preserving most of the information.
+    }
+    
+\end{frame}
 
 % END EXAMPLES
 
+\begin{frame}{}
+    \LARGE \centering \textbf{Thank You}
+\end{frame}
 
 \end{document}
