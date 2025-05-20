@@ -258,7 +258,7 @@ Note: Every PD matrix is PSD, but not conversely.
     \begin{itemize}
         \item Capture both objective and constraint behavior through gradient conditions.
         \item Identify which constraints are active at the optimal point.
-        \item Help verify optimality in general problems and certify it in convex problems.
+        \item Help \textbf{verification} of optimality in general problems and \textbf{certification} in convex problems.
     \end{itemize}
 
 \end{frame}
@@ -269,7 +269,7 @@ Note: Every PD matrix is PSD, but not conversely.
     \textbf{1. Verification (General / Non-Convex Case)}
     \begin{itemize}
         \item KKT conditions are \textbf{necessary but not sufficient}.
-        \item A point satisfying KKT is a \textbf{candidate} for optimality.
+        \item A point satisfying KKT is a \textbf{candidate} for optimality (optima or saddle point)
         \item Must verify using second-order conditions or objective comparison.
         \item \textit{Think of KKT as a filter — not a final verdict.}
     \end{itemize}
@@ -280,7 +280,7 @@ Note: Every PD matrix is PSD, but not conversely.
     \begin{itemize}
         \item KKT conditions are \textbf{necessary and sufficient}.
         \item If a point satisfies KKT, it is \textbf{guaranteed to be globally optimal}.
-        \item Requires convex objective and constraint functions (and mild regularity, e.g., Slater's condition).
+        \item Requires convex problem (convex $f$, convex $g_j$, affine $h_k$. Subsequent slides will give more clarity).
         \item \textit{Think of KKT as both filter and proof.}
     \end{itemize}
 
@@ -360,7 +360,7 @@ Note: Every PD matrix is PSD, but not conversely.
 
 \begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
     \begin{block}{KKT Conditions Part I}
-        For regular local minimum $\bm{x}^*$:
+        For \textbf{regular} local minimum $\bm{x}^*$:
 
         1. \textbf{Stationarity}:
         Derivative wrt $\bm{x}$ is 0 at $\bm{x}$ = $\bm{x}^*$.
@@ -399,13 +399,45 @@ Note: Every PD matrix is PSD, but not conversely.
 \end{frame}
 
 \begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
-    \begin{block}{Optimality Conditions}
+
+    \framebox{\parbox{\linewidth}{
+        \textbf{Goal:} Given a point \(\mathbf{x^*}\), verify whether it satisfies 
+        the necessary \\ conditions for optimality.
+    }}
+
+    \medskip
+
+    \textbf{What we do:}
+    \begin{itemize}
+        \item Check that \(\mathbf{x^*}\) is a \textbf{regular point} (i.e., constraint qualification holds).
+        \item Evaluate whether the KKT conditions are satisfied at point \(\mathbf{x^*}\).
+    \end{itemize}
+    
+    \textbf{Interpretation of Results:}
+    \begin{itemize}
+        \item If KKT conditions are \textbf{not satisfied}, then:
         \begin{itemize}
-            \item KKT conditions are \textbf{necessary} for local optimality at regular points
+            \item \(\mathbf{x^*}\) is \textbf{not optimal} (fails necessary conditions).
+        \end{itemize}
+        \item If KKT conditions \textbf{are satisfied}, then:
+        \begin{itemize}
+            \item In a \textbf{convex problem} → \(\mathbf{x^*}\) is \textbf{globally optimal}.
+            \item In a \textbf{non-convex problem} → \(\mathbf{x^*}\) is a \textbf{candidate only}; further analysis (e.g., second-order conditions, objective comparison) is required.
+        \end{itemize}
+    \end{itemize}
+
+    \textit{KKT verification is a checkpoint — necessary but not always conclusive.}
+    
+\end{frame}
+
+\begin{frame}{{Mathematical Foundation: Symmetric Positive Definite Matrices and \textbf{\underline{KKT Conditions}}}}
+    \begin{block}{KKT: Takeaways}
+        \begin{itemize}
+            \item KKT conditions are \textbf{necessary} for local optimality at \textbf{regular} points
             \item Regularity requires linear independence of active constraint gradients
             \item For convex problems (convex $f$, convex $g_j$, affine $h_k$), KKT becomes \textbf{sufficient}
             \item In convex cases, KKT solutions are \textbf{global minima}
-            \item Complementary slackness reveals which constraints are active ($\mu_j > 0$)
+            \item Complementary slackness reveals which constraints are active ($\mu_j > 0$ for active and $\mu_j = 0$ for inactive)
         \end{itemize}
     \end{block}
 
