@@ -19,7 +19,7 @@
     \begin{itemize}
         \item $\mathbf{X} \in \mathbb{R}^{n \times d}$: Mean-centered data matrix with $n$ samples and $d$ features
         \item $\mathbf{ C} = \mathbf{X}^\top\mathbf{X}$: Covariance matrix (symmetric positive semi-definite)
-        \item $\mathbf{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$: Diagonal eigenvalue matrix
+        \item $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$: Diagonal eigenvalue matrix
         \item $\mathbf{U}, \mathbf{\Sigma}, \mathbf{V}$: SVD components where $\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$
         \item $\sigma_i$: Singular values 
         \item $\|\cdot\|_F$: Frobenius norm; $\|\cdot\|_2$: 2 norm
@@ -644,7 +644,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
     \begin{block}{EVD for Non-Defective Matrices}
         For any square matrix $\mathbf{A} \in \mathbb{R}^{d \times d}$:
         \[
-        \mathbf{A} = \mathbf{V}\mathbf{\Lambda}\mathbf{V}^{-1}
+        \mathbf{A} = \mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^{-1}
         \]
         \begin{itemize}
             \item \textbf{Existence Condition}:
@@ -653,7 +653,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
                 \item Matrix is non-defective if the set of eigenvectors is linearly independent.
             \end{itemize}
             \item $\mathbf{V}$ contains eigenvectors (may not be orthogonal)
-            \item $\mathbf{\Lambda}$ diagonal with eigenvalues
+            \item $\boldsymbol{\Lambda}$ diagonal with eigenvalues
         \end{itemize}
     \end{block}
 \end{frame}
@@ -662,7 +662,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
     \begin{block}{EVD Special Case: Symmetric Matrices}
         For mean-centered data $\mathbf{X} \in \mathbb{R}^{n \times d}$ and symmetric $\mathbf{A} = \mathbf{X}^\top\mathbf{X}$:
         \[
-        \mathbf{A} = \mathbf{V}\mathbf{\Lambda}\mathbf{V}^\top
+        \mathbf{A} = \mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^\top
         \]
         \begin{itemize}
             \item \textbf{Guaranteed Properties}:
@@ -672,7 +672,7 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
                 \item All eigenvalues real and non-negative
             \end{itemize}
             \item $\mathbf{V} = [\mathbf{v}_1 \cdots \mathbf{v}_d]$ contains orthonormal eigenvectors (columns are principal directions)
-            \item $\mathbf{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$ with $\lambda_1 \geq \cdots \geq \lambda_d \geq 0$
+            \item $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$ with $\lambda_1 \geq \cdots \geq \lambda_d \geq 0$
         \end{itemize}
     \end{block}
 \end{frame}
@@ -736,7 +736,8 @@ where $\mathbf{1}$ is a column vector of ones
 where:
 \begin{itemize}
 \item $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \dots, \lambda_d)$, $\lambda_1 \geq \cdots \geq \lambda_d \geq 0$
-\item $\mathbf{V} = [\mathbf{v}_1 | \cdots | \mathbf{v}_d]$ (orthonormal eigenvectors)
+\item $\mathbf{V} = [\mathbf{v}_1 | \cdots | \mathbf{v}_d]$ (orthonormal eigenvectors) \\
+(Alternatively, \textbf{SVD} can be used to compute both $\mathbf{V}$ and $\boldsymbol{\Lambda}$)
 \end{itemize}
 \item Principal directions: columns of $\mathbf{V}$
 \end{itemize}
@@ -834,12 +835,39 @@ where:
 \end{frame}
 
 
+\begin{frame}{Image Compression}
+    \begin{minipage}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pca/origCat.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.40\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pca/origCat_gray.png}
+    \end{minipage}
+
+    We will use the above image [Selfie Kitty] for the demonstration of image compression. The original image is 561x561x3. Although we can work on each channel independently, we will grayscale the image for convenience.
+\end{frame}
+
+\begin{frame}{Image Compression}
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/pca/reconstructed_cat.png}
+
+    We found out that roughly 61 components are required for preserving 95 \% variance. This gives us a compression ratio of approximately 4.57 (why not $\frac{561}{61} \approx 9.19$ ?)
+    
+\end{frame}
+
+\begin{frame}{Image Compression}
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/pca/reconstructed_cat_grid.png}
+    
+\end{frame}
+
 \begin{frame}
   You can play around with the code and explore the examples presented in the previous slides by applying them to different datasets—whether your own personal datasets or other datasets available in scikit-learn—by using the following GitHub link:\\
     \vspace{1cm}
   \url{https://github.com/pesricha/MLDS-REVAMP/blob/main/notebooks/pca.ipynb}
 \end{frame}
-
 
 
 % END EXAMPLES
