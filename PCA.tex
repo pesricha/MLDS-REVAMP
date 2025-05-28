@@ -18,7 +18,7 @@
 \begin{frame}{Notations}
     \begin{itemize}
         \item $\mathbf{X} \in \mathbb{R}^{n \times d}$: Mean-centered data matrix with $n$ samples and $d$ features
-        \item $ \mathbf{X}^\top\mathbf{X}$: Covariance matrix (symmetric positive semi-definite)
+        \item $\mathbf{ C} = \mathbf{X}^\top\mathbf{X}$: Covariance matrix (symmetric positive semi-definite)
         \item $\mathbf{\Lambda} = \text{diag}(\lambda_1, \ldots, \lambda_d)$: Diagonal eigenvalue matrix
         \item $\mathbf{U}, \mathbf{\Sigma}, \mathbf{V}$: SVD components where $\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$
         \item $\sigma_i$: Singular values 
@@ -42,11 +42,6 @@
     \end{itemize}
         
     \end{block}
-
-    \begin{itemize}
-    \item \textbf{Principal Directions}: Orthogonal vectors that define the directions of maximum variance in the original feature space (New orthonormal basis vectors).
-    \item \textbf{Principal Components}: Coordinates of the data projected onto the principal directions; they represent the data in the new rotated basis.
-    \end{itemize}
 
     
     \footnotesize{Source: \scriptsize{https://en.wikipedia.org/wiki/Principal\_component\_analysis}}
@@ -702,8 +697,95 @@ The \texttt{sklearn}'s PCA\footnote{\scriptsize{https://scikit-learn.org/stable/
 
 % END DECOMP
 
+\begin{frame}
+    \LARGE \centering \textbf{Putting it all together: PCA}
+\end{frame}
+
+\begin{frame}{Step 1: Mean-Centering}
+\begin{itemize}
+\item Given raw data matrix $\mathbf{\tilde{X}} \in \mathbb{R}^{n \times d}$ ($n$ samples, $d$ features)
+\item Compute mean vector:
+\[
+\boldsymbol{\mu} = \frac{1}{n}\sum_{i=1}^n \mathbf{\tilde{X}}_i
+\]
+\item Center the data:
+\[
+\mathbf{X} = \mathbf{\tilde{X}} - \mathbf{1}\boldsymbol{\mu}^T
+\]
+where $\mathbf{1}$ is a column vector of ones
+\item $\mathbf{X}$ is now the mean-centered data matrix
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 2: Covariance Matrix}
+\begin{itemize}
+\item Compute sample covariance matrix:
+\[
+\mathbf{C} = \frac{1}{n-1} \mathbf{X}^T \mathbf{X}
+\]
+\item Division by $n-1$ is optional (Why?)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 3: Eigenvalue Decomposition}
+\begin{itemize}
+\item Decompose covariance matrix:
+\[
+\mathbf{C} = \mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^T
+\]
+where:
+\begin{itemize}
+\item $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \dots, \lambda_d)$, $\lambda_1 \geq \cdots \geq \lambda_d \geq 0$
+\item $\mathbf{V} = [\mathbf{v}_1 | \cdots | \mathbf{v}_d]$ (orthonormal eigenvectors)
+\end{itemize}
+\item Principal directions: columns of $\mathbf{V}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 4: Principal Components}
+\begin{itemize}
+\item Select $k$ based on explained variance:
+\[
+\frac{\lambda_i}{\sum_{j=1}^d \lambda_j} \geq \text{threshold}
+\]
+\item Projection matrix:
+\[
+\mathbf{W} = [\mathbf{v}_1 | \cdots | \mathbf{v}_k] \in \mathbb{R}^{d \times k}
+\]
+\item Each $\mathbf{v}_i$ maximizes remaining variance
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 5: Dimensionality Reduction}
+\begin{itemize}
+\item Project data to PC space:
+\[
+\mathbf{T} = \mathbf{X}\mathbf{W} \quad (\mathbf{T} \in \mathbb{R}^{n \times k})
+\]
+\item Preserves maximal variance in $k$ dimensions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Step 6: Data Reconstruction}
+\begin{itemize}
+\item Reconstruct approximation:
+\[
+\mathbf{\tilde{X}}_{\text{approx}} = \mathbf{T}\mathbf{W}^T + \mathbf{1}\boldsymbol{\mu}^T
+\]
+\item Reconstruction error:
+\[
+\|\mathbf{\tilde{X}} - \mathbf{\tilde{X}}_{\text{approx}}\|_F^2 = \sum_{i=k+1}^d \lambda_i
+\]
+\item Perfect when $k = d$ (no dimensionality reduction)
+\end{itemize}
+\end{frame}
+
 
 % EXAMPLES
+
+\begin{frame}{}
+    \LARGE \centering \textbf{Applications}
+\end{frame}
 
 \begin{frame}{Exploratory Data Visualization}
     \begin{center}
